@@ -5,7 +5,11 @@
 
 let connection = new signalR.HubConnectionBuilder().withUrl('/hubs/weather').build();
 connection.start().then(() => connection.stream('StreamWeather').subscribe({
-    next: (weather) => console.log(weather),
+    next: (weather) => {
+        document.querySelector(".location").innerHTML = weather.location;
+        document.querySelector(".temperature").innerHTML = weather.temperature;
+        document.querySelector(".date").innerHTML = weather.date;
+    },
     error: (err) => console.error(err),
     complete: () => { }
 })).catch((err) => console.error(err));
